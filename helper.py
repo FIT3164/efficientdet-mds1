@@ -1,3 +1,6 @@
+import io
+import numpy as np
+import cv2
 from torch import nn
 from efficientdet_arch.efficientdet.loss import FocalLoss
 
@@ -24,4 +27,13 @@ def freeze_backbone(m, layers=['EfficientNet', 'BiFPN']):
             for param in m.parameters():
                 param.requires_grad = False
                 
+def fig_to_image(fig, dpi=180):
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", dpi=dpi)
+    buf.seek(0)
+    img_arr = np.frombuffer(buf.getvalue(), dtype=np.uint8)
+    buf.close()
+    img = cv2.imdecode(img_arr, 1)
+    return img
+
 CONFIG = {"mean": [ 0.485, 0.456, 0.406 ], "std": [ 0.229, 0.224, 0.225 ]}
