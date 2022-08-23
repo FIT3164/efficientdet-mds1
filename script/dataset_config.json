@@ -1,0 +1,9 @@
+{
+    "WIDTH": 512,
+    "HEIGHT": 512,
+    "PROJECT_NAME": "goodbadchili",
+    "CATEGORY_MAP": {
+        "good_chili": 1,
+        "bad_chili": 2
+    }
+}
