@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.join(os.path.abspath(os.getcwd()), ".."))
 import json
 import glob
 import cv2
+import xml.etree.ElementTree as ET
 from tqdm import tqdm
 from utils import *
 
@@ -17,7 +18,7 @@ CATEGORY_MAP = config["CATEGORY_MAP"]
 FOLDER_NAME = "train"
 
 PROJECT_DATASET_DIR = os.path.join(os.path.abspath(os.getcwd()), "..", "..", "datasets", PROJECT_NAME)
-PASCALVOC_IMAGE_DIR = os.path.join(PROJECT_DATASET_DIR, FOLDER_NAME)
+PASCALVOC_IMAGE_DIR = os.path.join(PROJECT_DATASET_DIR, "PASCALVOC", FOLDER_NAME)
 
 img_paths = glob.glob(os.path.join(PASCALVOC_IMAGE_DIR, "*.JPG"))
 img_paths += glob.glob(os.path.join(PASCALVOC_IMAGE_DIR, "*.jpg"))
