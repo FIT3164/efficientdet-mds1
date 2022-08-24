@@ -3,10 +3,10 @@
     "CLASSES": ["good_chili", "bad_chili"],
     "EFFICIENTNET_COMPOUND_COEF": 0,
     "BATCH_SIZE": 32,
-    "EPOCH_NUM": 100,
+    "EPOCH_NUM": 6,
     "LEARNING_RATE": 1e-4,
     "OPTIMIZER": "AdamW",
-    "WEIGHT_PATH": "d0-chili-100E.pth",
+    "WEIGHT_PATH": "d0-chili-6E.pth",
     "ANCHOR_RATIOS": [
         "(1.0, 0.7)",
         "(1.0, 1.0)",

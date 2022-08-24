@@ -66,6 +66,7 @@ else:
 
 scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, verbose=True)
 
+loss_plot = []
 for epoch in range(EPOCH_NUM):
     epoch_loss = []
     progress_bar = tqdm(train_loader)
@@ -91,8 +92,9 @@ for epoch in range(EPOCH_NUM):
         except ValueError as e:
             print(f"[Error] {e}")
     scheduler.step(np.mean(epoch_loss))
+    loss_plot.append(np.mean(epoch_loss))
 
-epochs = range(1, len(epoch_loss)+1)
+epochs = range(1, len(loss_plot)+1)
 
 torch.save(model.model.state_dict(), os.path.join("weights", WEIGHT_PATH))
 
@@ -102,5 +104,5 @@ ax = fig.add_subplot(1, 1, 1)
 ax.set_title('Loss vs Epoch')
 ax.set_xlabel('Epoch')
 ax.set_ylabel('Loss')
-ax.plot(epochs, epoch_loss)
+ax.plot(epochs, loss_plot)
 cv2.imwrite(os.path.join("LossGraphs", f"{WEIGHT_PATH[:-4]}.png"), fig_to_image(fig))
