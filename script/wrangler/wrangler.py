@@ -2,12 +2,14 @@ import json
 from pprint import pprint
 from statistics import mean
 
+# open annotations json file
 with open("prototype/dataset/data/goodbadchili/annotations/instances_train.json") as f:
     file = json.loads("".join(f.readlines()))
-    bbox_list = []
+    bbox_list = [] # list of all bbox widths and heights
     for ann in file["annotations"]:
         bbox_list.append(ann["bbox"][2:4])
 
+    # print out general statistics about the bboxes
     print('general statistics')
     print(f'min width:  {min(bbox_list, key = lambda x: x[0])[0]}')
     print(f'max width:  {max(bbox_list, key = lambda x: x[0])[0]}')
@@ -17,6 +19,7 @@ with open("prototype/dataset/data/goodbadchili/annotations/instances_train.json"
     print(f'length: {len(bbox_list)}')
 
     print()
+    # split the widths and heights into groups of 10 units and count the frequency
     bbox_sizes = [[0 for _ in range(10)] for _ in range(10)] # f(x) = 30x + 30
     for bbox in bbox_list:
         bbox_sizes[(bbox[0] - 30) // 30][(bbox[1] - 30) // 30] += 1
@@ -27,6 +30,7 @@ with open("prototype/dataset/data/goodbadchili/annotations/instances_train.json"
     # filt_bbox_sizes = list(map(lambda y: list(map(lambda x: 1 if x >= freq_threshold else 0, y)), bbox_sizes))
     # pprint(filt_bbox_sizes)
 
+    # print out specific bbox width and height groups with their statistics filtered over a threshold
     print()
     print(f'most common (generalised) anchor box sizes with >= {freq_threshold}  occurences')
     img_size = 512*512
@@ -39,6 +43,7 @@ with open("prototype/dataset/data/goodbadchili/annotations/instances_train.json"
                 res.append(temp)
                 print(f'({temp[0]}, {temp[1]}), \tratio: {temp[2]}, \tsize:  {temp[3]}, \tscale: {temp[4]}, \tfreq: {temp[5]}')
 
+    # print the table based on the order of the ratio, scale, or frequencies
     print('\nsorted by ratio [2]')
     pprint(sorted(res, key = lambda x: x[2]))
 
@@ -49,7 +54,7 @@ with open("prototype/dataset/data/goodbadchili/annotations/instances_train.json"
     pprint(sorted(res, key = lambda x: -x[5]))
 
 
-# RESULTS FOR THE ORIGINAL COCO-FORMATTED NON-AUGMENTED DATASET
+# SAMPLE RESULTS FOR THE ORIGINAL COCO-FORMATTED NON-AUGMENTED DATASET
 
 # general statistics
 # min width:  37
